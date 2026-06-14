@@ -3,8 +3,9 @@ package com.ayush.libraryManagement.controller;
 import com.ayush.libraryManagement.model.Book;
 import com.ayush.libraryManagement.service.BookService;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/books")
@@ -17,7 +18,7 @@ public class BookController {
     }
 
     @PostMapping
-    public Book addBook(@RequestBody Book book) {
+    public Book addBook(@Valid @RequestBody Book book) {
         return bookService.addBook(book);
     }
 
@@ -26,8 +27,11 @@ public class BookController {
         return bookService.getAllBooks();
     }
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable Long id) {
-        return bookService.getBookById(id);
+    public ResponseEntity<Book> getBookById(
+            @PathVariable Long id){
+
+        return ResponseEntity.ok(
+                bookService.getBookById(id));
     }
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable Long id){

@@ -1,6 +1,10 @@
 package com.ayush.libraryManagement.service;
 
 import com.ayush.libraryManagement.dto.IssueRequest;
+import com.ayush.libraryManagement.exception.BookNotAvailableException;
+import com.ayush.libraryManagement.exception.BookNotFoundException;
+import com.ayush.libraryManagement.exception.IssueRecordNotFoundException;
+import com.ayush.libraryManagement.exception.StudentNotFoundException;
 import com.ayush.libraryManagement.model.Book;
 import com.ayush.libraryManagement.model.IssueRecord;
 import com.ayush.libraryManagement.model.Student;
@@ -32,18 +36,21 @@ public class IssueService {
 
         Student student = studentRepository
                 .findById(request.getStudentId())
-                .orElse(null);
+                .orElseThrow(() ->
+                        new StudentNotFoundException(
+                                "Student not found with id: "
+                                        + request.getStudentId()));
 
         Book book = bookRepository
                 .findById(request.getBookId())
-                .orElse(null);
-
-        if (student == null || book == null) {
-            return null;
-        }
+                .orElseThrow(() ->
+                        new BookNotFoundException(
+                                "Book not found with id: "
+                                        + request.getBookId()));
 
         if (!book.isAvailable()) {
-            return null;
+            throw new BookNotAvailableException(
+                    "Book is already issued");
         }
 
         IssueRecord issueRecord = new IssueRecord();
@@ -63,11 +70,9 @@ public class IssueService {
 
         IssueRecord issueRecord = issueRecordRepository
                 .findById(issueId)
-                .orElse(null);
-
-        if(issueRecord == null){
-            return null;
-        }
+                .orElseThrow(() ->
+                        new IssueRecordNotFoundException(
+                                "Issue record not found with id: " + issueId));
         Book book = issueRecord.getBook();
 
         issueRecord.setReturnDate(LocalDate.now());

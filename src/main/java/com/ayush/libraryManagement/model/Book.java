@@ -1,5 +1,5 @@
 package com.ayush.libraryManagement.model;
-
+import jakarta.validation.constraints.NotBlank;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,8 +12,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Title cannot be empty")
     private String title;
+
+    @NotBlank(message = "Author cannot be empty")
     private String author;
+
     private boolean available = true;
     public boolean isAvailable() {
         return available;

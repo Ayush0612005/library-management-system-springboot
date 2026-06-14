@@ -3,7 +3,7 @@ package com.ayush.libraryManagement.service;
 import com.ayush.libraryManagement.model.Student;
 import com.ayush.libraryManagement.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-
+import com.ayush.libraryManagement.exception.StudentNotFoundException;
 import java.util.List;
 
 @Service
@@ -23,22 +23,27 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElse(null);
+    public Student getStudentById(Long id){
+        return studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException(
+                                "Student not found with id: " + id));
     }
 
     public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException(
+                                "Student not found with id: " + id));
+
+        studentRepository.delete(student);
     }
 
     public Student updateStudent(Long id, Student updatedStudent) {
-
-        Student existingStudent =
-                studentRepository.findById(id).orElse(null);
-
-        if (existingStudent == null) {
-            return null;
-        }
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException(
+                                "Student not found with id: " + id));
 
         existingStudent.setName(updatedStudent.getName());
         existingStudent.setEmail(updatedStudent.getEmail());

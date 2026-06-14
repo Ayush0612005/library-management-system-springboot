@@ -4,15 +4,15 @@ A backend Library Management System built using Spring Boot, Spring Data JPA, My
 
 ## 🚀 Features
 
-- Manage Books
-- Manage Students
-- Issue Books
-- Return Books
+- Book Management (CRUD)
+- Student Management (CRUD)
+- Issue and Return Books
 - Book Availability Tracking
 - Input Validation
 - Global Exception Handling
 - Swagger API Documentation
-- JWT-based Authentication
+- JWT Authentication
+- Protected APIs using Spring Security
 - MySQL Database Integration
 
 ## 🛠 Tech Stack
@@ -22,7 +22,7 @@ A backend Library Management System built using Spring Boot, Spring Data JPA, My
 - Spring Data JPA
 - MySQL
 - Spring Security
-- JWT
+- JWT Authentication
 - Swagger / OpenAPI
 - Maven
 

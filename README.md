@@ -37,6 +37,24 @@ exception/
 security/
 config/
 
+## 📸 Screenshots
+
+### Swagger Documentation
+
+![Swagger UI](docs/images/swagger-home.png)
+
+### JWT Authentication
+
+![JWT Login](docs/images/jwt-login.png)
+
+### Protected API Access
+
+![Protected API](docs/images/protected-api.png)
+
+### MySQL Database Tables
+
+![MySQL Tables](docs/images/mysql-tables.png)
+
 ## 🔑 Authentication
 
 Login Endpoint:
